@@ -17,7 +17,8 @@ init -1:
                     text who id "who"
             
             # FancyText: Here's where all the magic happens.
-            # Replace your usual "text" statement with "fancytext" to 
+            # Replace your usual "text" statement with "fancytext" to enable
+            # some fancy effects on text display.
             fancytext what id "what" slow_effect slow_effect slow_effect_delay slow_effect_delay always_effect always_effect
 
 define e = Character("Eileen")

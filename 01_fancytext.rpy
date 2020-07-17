@@ -315,9 +315,9 @@ python early:
                     else:
                         b_y += layout.add_top
                     
-                    # we're cheating by using the alpha property to store a full
-                    # transform because other functions that use the Blit create
-                    # them from scratch, so we'd lose anything monkey-patched in
+                    # We're cheating by using the alpha property to store a full
+                    # Transform because other functions that use the Blit create
+                    # them from scratch, so we'd lose anything we hacked in.
                     surf = tex.subsurface((b_x, b_y, b_w, b_h))
                     char = renpy.Render(b_w, b_h)
                     
@@ -449,10 +449,6 @@ python early:
                 
                 if l is None:
                     return rv
-            
-            # if self.always_effect and not self.slow:
-            #     for l in layout.lines:
-            #         st = max(st, l.max_time + self.slow_effect_delay)
             
             # Then go back through for any that *aren't* complete and blit as needed.
             for l in layout.lines:
