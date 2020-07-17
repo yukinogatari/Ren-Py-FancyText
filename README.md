@@ -55,4 +55,4 @@ Right now, we only support a few transform parameters:
 
 ### License
 
-See `UNLICENSE` for license information.
+The majority of the code used here is copied/modified from the Ren'Py source code, and as such, FancyText is released under the same license as Ren'Py itself. See LICENSE for more details.
