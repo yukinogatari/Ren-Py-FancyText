@@ -26,13 +26,13 @@ python early:
         t = Transform()
         
         t.alpha = 1.0
-
+        
         if not gt == -1:
-            
+                
             if st < gt:
                 t.alpha = 0.0
             
-            elif st > gt + delay:
+            elif gt == 0.0 or st > gt + delay:
                 t.alpha = 1.0
             
             else:
@@ -51,7 +51,7 @@ python early:
                 t.xoffset = x
                 t.yoffset = y
             
-            elif st > gt + delay:
+            elif gt == 0.0 or st > gt + delay:
                 t.alpha = 1.0
                 t.xoffset = 0
                 t.yoffset = 0
@@ -83,7 +83,7 @@ python early:
                 t.xoffset = x
                 t.yoffset = y
             
-            elif st > gt + delay:
+            elif gt == 0.0 or st > gt + delay:
                 t.alpha = 1.0
                 t.xoffset = 0
                 t.yoffset = 0
@@ -108,7 +108,7 @@ python early:
                 t.alpha  = 0.0
                 t.rotate = 0.0
             
-            elif st > gt + delay:
+            elif gt == 0.0 or st > gt + delay:
                 t.alpha  = 1.0
                 t.rotate = 0.0
             
@@ -129,7 +129,7 @@ python early:
                 t.xoffset = slide_x
                 t.yoffset = slide_y
             
-            elif st > gt + delay:
+            elif gt == 0.0 or st > gt + delay:
                 t.alpha = 1.0
                 t.xoffset = 0
                 t.yoffset = 0
@@ -153,7 +153,7 @@ python early:
             if st < gt:
                 t.alpha  = 0.0
             
-            elif st > gt + delay:
+            elif gt == 0.0 or st > gt + delay:
                 t.alpha  = 1.0
             
             else:
@@ -268,7 +268,7 @@ python early:
                 tex = layout.textures[o, color]
 
                 if o:
-                    oblits = outline_blits(blits, o)
+                    oblits = renpy.text.text.outline_blits(blits, o)
                 else:
                     oblits = blits
 
