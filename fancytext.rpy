@@ -338,6 +338,11 @@ python early:
                         
                         # Apply alpha
                         char.alpha = trans.alpha
+                        
+                        if config.gl2:
+                            char.add_shader("renpy.alpha")
+                            char.add_uniform("u_renpy_alpha", char.alpha)
+                            char.add_uniform("u_renpy_over", char.alpha)
                     
                     else:
                         char.absolute_blit(
