@@ -337,7 +337,6 @@ python early:
                         )
                         
                         # Apply alpha
-                        # char.alpha = trans.alpha
                         char.add_shader("renpy.alpha")
                         char.add_uniform("u_renpy_alpha", trans.alpha)
                         char.add_uniform("u_renpy_over", 1.0)
@@ -393,14 +392,14 @@ python early:
                 rv.add_focus(self, hyperlink, h_x, h_y, h_w, h_h)
 
             # Figure out if we need to redraw or call slow_done.
-            if self.slow and not self.always_effect:
-                if redraw is not None:
-                    renpy.display.render.redraw(self, max(redraw, 0))
-                else:
-                    self.call_slow_done(st)
+            if self.slow and not self.always_effect and not redraw is None:
+                renpy.display.render.redraw(self, max(redraw, 0))
             
             elif self.always_effect:
                 renpy.display.render.redraw(self, 0)
+            
+            if self.slow and redraw is None:
+                self.call_slow_done(st)
 
             rv.forward = layout.forward
             rv.reverse = layout.reverse
@@ -411,9 +410,6 @@ python early:
                 vrv.reverse = VERT_REVERSE
                 vrv.blit(rv, (rv.height, 0))
                 rv = vrv
-
-            # if layout.pixel_perfect:
-            #     rv.properties = dict(pixel_perfect = True)
 
             return rv
 
