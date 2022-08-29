@@ -213,7 +213,7 @@ python early:
             renders = { }
 
             for i in self.displayables:
-                renders[i] = renpy.render(i, width, self.style.size, st, at)
+                renders[i] = renpy.display.render.render(i, width, self.style.size, st, at)
 
             # Find the virtual-resolution layout.
             virtual_layout = self.get_virtual_layout()
@@ -253,11 +253,11 @@ python early:
                 redraw = self.redraw_slow(layout, st)
 
             # Blit text layers.
-            rv = renpy.Render(vw, vh)
+            rv = renpy.display.render.Render(vw, vh)
             # rv = renpy.Render(*layout.unscale_pair(w, h))
 
             if renpy.config.draw_virtual_text_box:
-                fill = renpy.Render(vw, vh)
+                fill = renpy.display.render.Render(vw, vh)
                 fill.fill((255, 0, 0, 32))
                 fill.forward = layout.reverse
                 fill.reverse = layout.forward
@@ -319,7 +319,7 @@ python early:
                     # Transform because other functions that use the Blit create
                     # them from scratch, so we'd lose anything we hacked in.
                     surf = tex.subsurface((b_x, b_y, b_w, b_h))
-                    char = renpy.Render(b_w, b_h)
+                    char = renpy.display.render.Render(b_w, b_h)
                     
                     if isinstance(b.alpha, Transform):
                         trans = b.alpha
@@ -337,7 +337,10 @@ python early:
                         )
                         
                         # Apply alpha
-                        char.alpha = trans.alpha
+                        # char.alpha = trans.alpha
+                        char.add_shader("renpy.alpha")
+                        char.add_uniform("u_renpy_alpha", trans.alpha)
+                        char.add_uniform("u_renpy_over", 1.0)
                     
                     else:
                         char.absolute_blit(
@@ -357,7 +360,7 @@ python early:
 
                 self.displayable_offsets = [ ]
 
-                drend = renpy.Render(w, h)
+                drend =  renpy.display.render.Render(w, h)
                 drend.forward = layout.reverse
                 drend.reverse = layout.forward
 
@@ -392,9 +395,9 @@ python early:
             # Figure out if we need to redraw or call slow_done.
             if self.slow and not self.always_effect:
                 if redraw is not None:
-                    renpy.display.render.redraw(self, redraw)
+                    renpy.display.render.redraw(self, max(redraw, 0))
                 else:
-                    renpy.display.interface.timeout(0)
+                    self.call_slow_done(st)
             
             elif self.always_effect:
                 renpy.display.render.redraw(self, 0)
@@ -403,11 +406,14 @@ python early:
             rv.reverse = layout.reverse
 
             if self.style.vertical:
-                vrv = renpy.Render(rv.height, rv.width)
+                vrv = renpy.display.render.Render(rv.height, rv.width)
                 vrv.forward = VERT_FORWARD
                 vrv.reverse = VERT_REVERSE
                 vrv.blit(rv, (rv.height, 0))
                 rv = vrv
+
+            # if layout.pixel_perfect:
+            #     rv.properties = dict(pixel_perfect = True)
 
             return rv
 
