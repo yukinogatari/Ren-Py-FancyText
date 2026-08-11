@@ -1,3 +1,7 @@
+# Archived
+
+With the introduction of [Text Shaders](https://www.renpy.org/doc/html/textshaders.html), this module is no longer necessary and will not be receiving any updates/fixes.
+
 # Ren'Py FancyText Module
 
 FancyText is a drop-in module for Ren'Py 7.3.5 that lets you display text on screens with a little more pizazz than vanilla.
